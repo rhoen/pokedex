@@ -7,35 +7,45 @@ Pokedex.Router = Backbone.Router.extend({
 
   pokemonDetail: function (id, callback) {
     if (this._pokemonIndex) {
-      this.pokemonDetailCallback(id);
+      this.pokemonDetailCallback(id, callback);
     } else {
       this.pokemonIndex(
-        this.pokemonDetailCallback.bind(this, id)
+        this.pokemonDetailCallback.bind(this, id, callback)
       );
     }
   },
 
-  pokemonDetailCallback: function(id) {
+  pokemonDetailCallback: function(id, callback) {
     var pokemon = this._pokemonIndex.pokes.get(id);
-    var pokemonView = new Pokedex.Views.PokemonDetail({model: pokemon});
+    var pokemonView = new Pokedex.Views.PokemonDetail({ model: pokemon });
     this._pokemonDetail = pokemonView;
-    $("#pokedex .pokemon-detail").html(pokemonView.refreshPokemon().$el);
+    $("#pokedex .pokemon-detail").html(pokemonView.refreshPokemon({ success: callback }).$el);
   },
 
   pokemonIndex: function (callback) {
     this._pokemonIndex = new Pokedex.Views.PokemonIndex();
     $(".pokemon-list")
-      .html(this._pokemonIndex.refreshPokemon({success: callback}).$el);
+      .html(this._pokemonIndex.refreshPokemon({ success: callback }).$el);
+    this.pokemonForm();
   },
 
   toyDetail: function (pokemonId, toyId) {
+    if (this._pokemonDetail) {
+      this.toyDetailCallback(toyId);
+    } else {
+      this.pokemonDetail(pokemonId, this.toyDetailCallback.bind(this, toyId));
+    }
+  },
 
+  toyDetailCallback: function(toyId) {
     var toy = this._pokemonDetail.model.toys().get(toyId);
     var toyView = new Pokedex.Views.ToyDetail({toy: toy});
     $("#pokedex .toy-detail").html(toyView.render().$el);
   },
 
   pokemonForm: function () {
+    var pokemonFormView = new Pokedex.Views.PokemonForm({model: new Pokedex.Models.Pokemon(), collection: this._pokemonIndex.collection});
+    $('#pokedex .pokemon-form').html(pokemonFormView.render().$el);
   }
 });
 
