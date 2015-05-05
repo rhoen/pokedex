@@ -18,8 +18,9 @@ Pokedex.Views.PokemonIndex = Backbone.View.extend({
   },
 
   refreshPokemon: function (options) {
-    this.pokes.fetch();
-
+    this.pokes.fetch({
+      success: options.success
+    });
     return this;
   },
 
