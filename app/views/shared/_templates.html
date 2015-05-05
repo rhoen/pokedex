@@ -30,6 +30,26 @@
 </script>
 
 <script type="text/template" id="toy-detail-template">
+  <div class="detail">
+    <img src="<%%= toy.escape('image_url')%>"><br>
+    <ul class="toy-attributes">
+      <%% _.each(["name", "happiness", "price"], function(attr) { %>
+        <li> <%%= attr + " : " + toy.get(attr) %> </li>
+      <%% }) %>
+    </ul>
+    <select data-pokemon-id=<%%= toy.get('pokemon_id') %> data-toy-id=<%%= toy.id %> >
+      <%% _.each(allPokemon.models, function(pokemon) { %>
+        <option
+          value=<%%=pokemon.id %>
+          <%% if (toy.get("pokemon_id") == pokemon.id) { %>
+            selected
+          <%% } %>
+        >
+          <%%= pokemon.get('name') %>
+        </option>
+      <%% }) %>
+    </select>
+  </div>
 </script>
 
 <script type="text/template" id="pokemon-form-template">
