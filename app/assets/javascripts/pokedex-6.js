@@ -5,7 +5,11 @@ Pokedex.Router = Backbone.Router.extend({
     "pokemon/:pokemonId/toys/:toyId" : "toyDetail",
   },
 
-  pokemonDetail: function (id, callback) {
+  pokemonForm: function () {
+    this._pokemonForm = new Pokedix.Views.PokemonForm((new Pokedex.Models.Pokemon), this._pokemonIndex.collection);
+  },
+
+  pokemonDetail: function(id, callback) {
     if (this._pokemonIndex) {
       this.pokemonDetailCallback(id, callback);
     } else {
@@ -26,7 +30,7 @@ Pokedex.Router = Backbone.Router.extend({
     this._pokemonIndex = new Pokedex.Views.PokemonIndex();
     $(".pokemon-list")
       .html(this._pokemonIndex.refreshPokemon({ success: callback }).$el);
-    this.pokemonForm();
+
   },
 
   toyDetail: function (pokemonId, toyId) {
@@ -43,10 +47,6 @@ Pokedex.Router = Backbone.Router.extend({
     $("#pokedex .toy-detail").html(toyView.render().$el);
   },
 
-  pokemonForm: function () {
-    var pokemonFormView = new Pokedex.Views.PokemonForm({model: new Pokedex.Models.Pokemon(), collection: this._pokemonIndex.collection});
-    $('#pokedex .pokemon-form').html(pokemonFormView.render().$el);
-  }
 });
 
 

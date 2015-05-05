@@ -4,6 +4,9 @@ Pokedex.Views.PokemonForm = Backbone.View.extend({
   events: {
   },
 
+  initialize: function(model, collection) {
+  },
+
   render: function () {
   },
 
