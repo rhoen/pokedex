@@ -6,6 +6,8 @@ Pokedex.RootView.prototype.addToyToList = function (toy) {
 Pokedex.RootView.prototype.renderToyDetail = function (toy) { // III
   var content = JST["toyDetail"]({toy: toy, allPokemon: this.pokes});
   this.$toyDetail.html(content);
+  var pokemonID = toy.get("pokemon_id");
+  $(".pokemon-dropdown").val(pokemonID).attr("selected", "selected");
 };
 
 Pokedex.RootView.prototype.selectToyFromList = function (event) {

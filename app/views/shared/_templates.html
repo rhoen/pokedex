@@ -22,7 +22,7 @@
 </script>
 
 <script type="text/template" id="toy-list-item-template">
-  <li class="toy-list-item" data-id=<%%= toy.id %> data-pokemon-id=<%%= toy.get("pokemon_id") %>>
+  <li class="toy-list-item" data-id="<%%= toy.id %>" data-pokemon-id="<%%= toy.get("pokemon_id")%>">
     <%% _.each(['name', 'happiness', 'price'], function(attr) { %>
       <%%= attr + " : " + toy.get(attr) %>
     <%% }) %>
@@ -37,14 +37,9 @@
         <li> <%%= attr + " : " + toy.get(attr) %> </li>
       <%% }) %>
     </ul>
-    <select data-pokemon-id=<%%= toy.get('pokemon_id') %> data-toy-id=<%%= toy.id %> >
-      <%% _.each(allPokemon.models, function(pokemon) { %>
-        <option
-          value=<%%=pokemon.id %>
-          <%% if (toy.get("pokemon_id") == pokemon.id) { %>
-            selected
-          <%% } %>
-        >
+    <select class="pokemon-dropdown" data-pokemon-id="<%%= toy.get('pokemon_id') %>" data-toy-id="<%%= toy.id %>" >
+      <%% allPokemon.each( function(pokemon) { %>
+        <option value="<%%=pokemon.id %>" id="<%%=pokemon.id %>">
           <%%= pokemon.get('name') %>
         </option>
       <%% }) %>
