@@ -2,6 +2,7 @@ Pokedex.Views = (Pokedex.Views || {});
 
 Pokedex.Views.PokemonForm = Backbone.View.extend({
   events: {
+    "submit form" : "savePokemon"
   },
 
   initialize: function(model, collection) {
@@ -15,5 +16,14 @@ Pokedex.Views.PokemonForm = Backbone.View.extend({
   },
 
   savePokemon: function (event) {
+    event.preventDefault();
+    var params = $(event.currentTarget).serializeJSON()["pokemon"];
+    this.model.set(params);
+    this.model.save({},{
+      success: function () {
+        this.collection.add(this.model);
+        Backbone.history.navigate("/pokemon/" + this.model.id, {trigger: true});
+      }.bind(this)
+    });
   }
 });
