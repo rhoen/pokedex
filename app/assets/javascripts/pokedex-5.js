@@ -87,6 +87,7 @@ Pokedex.Views.ToyDetail = Backbone.View.extend({
   render: function () {
     var content = JST["toyDetail"]({toy: this.toy, allPokemon: this.allPokemon});
     this.$el.html(content);
+    this.$el.find('.pokemon-dropdown').val(this.toy.get("pokemon_id")).attr("selected", "selected");
     return this;
   }
 });
