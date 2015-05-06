@@ -81,10 +81,11 @@ Pokedex.Views.PokemonDetail = Backbone.View.extend({
 Pokedex.Views.ToyDetail = Backbone.View.extend({
   initialize: function(options) {
     this.toy = options.toy;
+    this.allPokemon = options.allPokemon;
   },
 
   render: function () {
-    var content = JST["toyDetail"]({toy: this.toy, allPokemon: new Backbone.Collection()});
+    var content = JST["toyDetail"]({toy: this.toy, allPokemon: this.allPokemon});
     this.$el.html(content);
     return this;
   }
